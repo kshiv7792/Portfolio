@@ -51,7 +51,28 @@
     const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
     scrollProgress.style.width = (scrolled || 0) + '%';
   }
-  document.addEventListener('scroll', () => requestAnimationFrame(updateScrollProgress), { passive: true });
+  let scrollFrame = 0;
+  let scrollStopTimer;
+  function scheduleScrollUpdate(){
+    if (!scrollFrame) {
+      scrollFrame = requestAnimationFrame(() => {
+        scrollFrame = 0;
+        updateScrollProgress();
+        updateTimelineFill();
+      });
+    }
+    if (!reducedMotion) {
+      clearTimeout(scrollStopTimer);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+      scrollStopTimer = setTimeout(() => {
+        drawNeural();
+      }, 140);
+    }
+  }
+  document.addEventListener('scroll', scheduleScrollUpdate, { passive: true });
   updateScrollProgress();
 
   /* ============ MAGNETIC BUTTONS ============ */
@@ -64,6 +85,23 @@
         el.style.transform = `translate(${x * 0.18}px, ${y * 0.35}px)`;
       });
       el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
+    });
+  }
+
+  /* ============ HERO DEPTH ============ */
+  const hero = document.querySelector('.hero');
+  const heroVisual = document.getElementById('heroVisual');
+  if (hero && heroVisual && !isTouch && !reducedMotion) {
+    hero.addEventListener('mousemove', (event) => {
+      const rect = hero.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width - 0.5) * 12;
+      const y = ((event.clientY - rect.top) / rect.height - 0.5) * 8;
+      heroVisual.style.setProperty('--hero-x', x.toFixed(2));
+      heroVisual.style.setProperty('--hero-y', y.toFixed(2));
+    });
+    hero.addEventListener('mouseleave', () => {
+      heroVisual.style.setProperty('--hero-x', '0');
+      heroVisual.style.setProperty('--hero-y', '0');
     });
   }
 
@@ -198,6 +236,7 @@
         const suffix = el.dataset.suffix || '';
         if (reducedMotion) { el.textContent = target + suffix; counterObserver.unobserve(el); return; }
         let cur = 0;
+        el.textContent = '0';
         const step = Math.max(1, Math.round(target / 40));
         const tick = () => {
           cur = Math.min(target, cur + step);
@@ -365,7 +404,6 @@
     const pct = total > 0 ? (visibleTop / total) * 100 : 0;
     tlLineFill.style.height = pct + '%';
   }
-  document.addEventListener('scroll', () => requestAnimationFrame(updateTimelineFill), { passive: true });
   updateTimelineFill();
 
   /* ============ PROJECT FILTERS ============ */
@@ -385,9 +423,41 @@
   });
 
   /* ============ PROJECT EXPAND ============ */
+  const projectCards = document.querySelectorAll('.proj-card');
+  const projectInteractiveSelector = 'a, button, input, textarea, select, [contenteditable="true"]';
+
+  function toggleProject(card){
+    const isOpen = card.classList.toggle('open');
+    const expandButton = card.querySelector('.proj-expand');
+    if (expandButton) {
+      expandButton.setAttribute('aria-expanded', String(isOpen));
+      expandButton.setAttribute('aria-label', isOpen ? 'Collapse project details' : 'Expand project details');
+    }
+  }
+
+  projectCards.forEach(card => {
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+
+    card.addEventListener('click', (event) => {
+      if (event.target.closest(projectInteractiveSelector)) return;
+      toggleProject(card);
+    });
+
+    card.addEventListener('keydown', (event) => {
+      if (event.target.closest(projectInteractiveSelector)) return;
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleProject(card);
+      }
+    });
+  });
+
   document.querySelectorAll('.proj-expand').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.closest('.proj-card').classList.toggle('open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleProject(btn.closest('.proj-card'));
     });
   });
 

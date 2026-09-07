@@ -37,12 +37,12 @@
   <div class="nav-inner">
     <div class="brand"><span class="brand-dot" id="statusDot"></span> Shiv.Paswan <span class="brand-status">system online</span></div>
     <nav class="links">
-      <a href="#about">about</a>
-      <a href="#" class="js-open-jarvis">jarvis</a>
-      <a href="#skills">skills</a>
-      <a href="#experience">experience</a>
-      <a href="#projects">projects</a>
-      <a href="#education">education</a>
+      <a href="#about">About</a>
+      <a href="#" class="js-open-jarvis">Jarvis</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
     </nav>
     <a class="nav-cta magnetic" href="#contact">contact →</a>
     <button class="nav-burger" id="navBurger" aria-label="Menu">
@@ -50,13 +50,13 @@
     </button>
   </div>
   <div class="nav-mobile" id="navMobile">
-    <a href="#about">about</a>
-    <a href="#" class="js-open-jarvis">jarvis</a>
-    <a href="#skills">skills</a>
-    <a href="#experience">experience</a>
-    <a href="#projects">projects</a>
-    <a href="#education">education</a>
-    <a href="#contact">contact</a>
+    <a href="#about">About</a>
+    <a href="#" class="js-open-jarvis">Jarvis</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
   </div>
 </header>
 
@@ -64,36 +64,68 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-glow hero-glow-one"></div>
+    <div class="hero-glow hero-glow-two"></div>
     <div class="hero-grid">
-      <div>
-        <p class="eyebrow-line"><span class="pulse-dot"></span> AI Developer / Bangalore, India</p>
-        <h1 class="hero-title">Building AI systems that turn <span class="accent">raw data</span> into decisions.</h1>
+      <div class="hero-copy">
+        <p class="eyebrow-line"><span class="pulse-dot"></span> AI Developer · Bangalore, India</p>
+        <h1 class="hero-title">Building the<br><span class="accent">machinery</span> behind<br>intelligent decisions.</h1>
         <p class="hero-desc">4+ years designing and shipping ML and Generative AI systems — from LLM knowledge assistants to financial forecasting models — for enterprise and fintech teams.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary magnetic" href="#projects"><span>View projects</span></a>
-          <a class="btn btn-ghost magnetic js-open-jarvis" href="#"><span>Ask Jarvis about me</span></a>
+          <a class="btn btn-primary magnetic" href="#projects"><span>View projects</span><span class="btn-arrow">↗</span></a>
+          <a class="btn btn-ghost magnetic js-open-jarvis" href="#"><span>Ask Jarvis about me</span><span class="btn-arrow">↗</span></a>
+          <a class="btn btn-ghost magnetic" href="resume.pdf" download="Shiv-Kumar-Paswan-Resume.pdf" aria-label="Download resume as PDF"><span>Download resume</span><span class="btn-arrow">↓</span></a>
         </div>
         <div class="hero-meta">
           <div><span>Currently</span> — AI Developer @ Yokogawa</div>
-          <div><span>Based in</span> — Bangalore, India</div>
+          <div><span>Focus</span> — GenAI · ML · Financial Analytics</div>
         </div>
       </div>
 
-      <div class="terminal">
-        <div class="terminal-head">
-          <div class="readout-dots"><span class="td-red"></span><span class="td-yellow"></span><span class="td-green"></span></div>
-          <span>shiv@portfolio: ~</span>
-        </div>
-        <div class="terminal-body" id="terminalBody">
-          <div class="term-line">Welcome. Type isn't required — just watch.</div>
-        </div>
-        <div class="terminal-stats">
-          <div><div class="rs-num" data-count="4" data-suffix="+">0</div><div class="rs-label">years exp.</div></div>
-          <div><div class="rs-num" data-count="9">0</div><div class="rs-label">shipped projects</div></div>
-          <div><div class="rs-num" data-count="30" data-suffix="%">0</div><div class="rs-label">accuracy lift</div></div>
+      <div class="hero-visual-wrap">
+        <div class="hero-visual" id="heroVisual">
+          <div class="visual-orbit visual-orbit-one"></div>
+          <div class="visual-orbit visual-orbit-two"></div>
+          <div class="terminal">
+            <div class="terminal-head">
+              <div class="readout-dots"><span class="td-red"></span><span class="td-yellow"></span><span class="td-green"></span></div>
+              <span>shiv@portfolio: ~/systems</span>
+              <span class="terminal-live"><i></i> live</span>
+            </div>
+            <div class="dashboard-body">
+              <div class="dashboard-topline"><span>AI SYSTEM / 04</span><span>07.09.2026</span></div>
+              <div class="dashboard-title"><span class="dashboard-pulse"></span><strong>model workspace</strong><span class="dashboard-state">operational</span></div>
+              <div class="dashboard-grid">
+                <div class="terminal-body" id="terminalBody">
+                  <div class="term-line">Welcome. Type isn't required — just watch.</div>
+                </div>
+                <div class="signal-panel">
+                  <div class="signal-label">signal / confidence</div>
+                  <div class="signal-number">0.94</div>
+                  <div class="signal-bars"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                  <div class="signal-foot"><span>RAG pipeline</span><span>stable</span></div>
+                </div>
+              </div>
+              <div class="chart-panel">
+                <div class="chart-head"><span>inference activity</span><span>last 24h</span></div>
+                <div class="chart-lines"><i></i><i></i><i></i></div>
+                <div class="chart-bars"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <svg class="chart-line" viewBox="0 0 500 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 C30 66 42 52 70 57 S105 75 130 54 S167 25 194 42 S225 68 253 48 S287 20 315 36 S348 62 374 43 S411 28 440 34 S474 22 500 12" /></svg>
+              </div>
+              <div class="dashboard-foot"><span><i></i> knowledge assistant</span><span>azure / python / sql</span></div>
+            </div>
+            <div class="terminal-stats">
+              <div><div class="rs-num" data-count="4" data-suffix="+">4+</div><div class="rs-label">years exp.</div></div>
+              <div><div class="rs-num" data-count="9">9</div><div class="rs-label">shipped projects</div></div>
+              <div><div class="rs-num" data-count="30" data-suffix="%">30%</div><div class="rs-label">accuracy lift</div></div>
+            </div>
+          </div>
+          <div class="floating-readout readout-one"><span>01</span> retrieval online</div>
+          <div class="floating-readout readout-two"><span>↗</span> data → decisions</div>
         </div>
       </div>
     </div>
+    <a class="hero-scroll" href="#about"><span>scroll to explore</span><b>↓</b></a>
   </section>
 
   <!-- ABOUT -->
@@ -123,8 +155,8 @@
     <div class="skills-wrap">
       <svg id="skillGraph" class="skill-graph" viewBox="0 0 700 460"></svg>
       <div class="skill-panel" id="skillPanel">
-        <div class="skill-panel-title">core</div>
-        <div class="skill-panel-tags"><span>select a node</span></div>
+        <div class="skill-panel-title">Languages</div>
+        <div class="skill-panel-tags"><span>Python</span><span>R</span><span>SQL</span><span>C++</span><span>Advanced Excel</span></div>
       </div>
     </div>
   </section>
@@ -353,6 +385,7 @@
           <span class="copy-label">+91 97711 71907</span>
           <span class="copy-done">Copied ✓</span>
         </button>
+        <a class="btn btn-ghost magnetic" href="https://www.linkedin.com/in/shiv-k-paswan/" target="_blank" rel="noopener">LinkedIn ↗</a>
         <a class="btn btn-ghost magnetic" href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
@@ -376,10 +409,10 @@
       </div>
       <button class="jarvis-close" id="jarvisClose" aria-label="Close">✕</button>
     </div>
-    <p class="jarvis-note">Trained on one resume. Tap a question — no backend, nothing leaves your browser.</p>
+    <p class="jarvis-note">Portfolio assistant — client-side only, nothing leaves your browser.</p>
     <div class="ask-chat" id="askChat">
       <div class="chat-row bot">
-        <div class="chat-bubble">Hi, I'm Jarvis. I can answer a few questions about Shiv's work. Pick one below.</div>
+        <div class="chat-bubble">Hi, I'm Jarvis. I can answer questions about Shiv's experience, skills and projects.</div>
       </div>
     </div>
     <div class="ask-chips" id="askChips"></div>
