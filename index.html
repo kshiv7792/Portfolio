@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shiv Kumar Paswan — AI Developer</title>
+<meta name="description" content="Shiv Kumar Paswan — AI Developer specializing in Generative AI, ML systems and financial data analysis." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- BOOT SCREEN -->
+<div id="boot" class="boot">
+  <div class="boot-inner">
+    <div class="boot-line">initializing<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>
+    <div class="boot-bar"><div class="boot-bar-fill" id="bootFill"></div></div>
+    <div class="boot-pct" id="bootPct">0%</div>
+  </div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NEURAL BACKGROUND -->
+<canvas id="neuralCanvas" class="neural-canvas"></canvas>
+<div class="grid-field"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="brand-dot" id="statusDot"></span> Shiv.Paswan <span class="brand-status">system online</span></div>
+    <nav class="links">
+      <a href="#about">about</a>
+      <a href="#" class="js-open-jarvis">jarvis</a>
+      <a href="#skills">skills</a>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#education">education</a>
+    </nav>
+    <a class="nav-cta magnetic" href="#contact">contact →</a>
+    <button class="nav-burger" id="navBurger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="#about">about</a>
+    <a href="#" class="js-open-jarvis">jarvis</a>
+    <a href="#skills">skills</a>
+    <a href="#experience">experience</a>
+    <a href="#projects">projects</a>
+    <a href="#education">education</a>
+    <a href="#contact">contact</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow-line"><span class="pulse-dot"></span> AI Developer / Bangalore, India</p>
+        <h1 class="hero-title">Building AI systems that turn <span class="accent">raw data</span> into decisions.</h1>
+        <p class="hero-desc">4+ years designing and shipping ML and Generative AI systems — from LLM knowledge assistants to financial forecasting models — for enterprise and fintech teams.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary magnetic" href="#projects"><span>View projects</span></a>
+          <a class="btn btn-ghost magnetic js-open-jarvis" href="#"><span>Ask Jarvis about me</span></a>
+        </div>
+        <div class="hero-meta">
+          <div><span>Currently</span> — AI Developer @ Yokogawa</div>
+          <div><span>Based in</span> — Bangalore, India</div>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="terminal-head">
+          <div class="readout-dots"><span class="td-red"></span><span class="td-yellow"></span><span class="td-green"></span></div>
+          <span>shiv@portfolio: ~</span>
+        </div>
+        <div class="terminal-body" id="terminalBody">
+          <div class="term-line">Welcome. Type isn't required — just watch.</div>
+        </div>
+        <div class="terminal-stats">
+          <div><div class="rs-num" data-count="4" data-suffix="+">0</div><div class="rs-label">years exp.</div></div>
+          <div><div class="rs-num" data-count="9">0</div><div class="rs-label">shipped projects</div></div>
+          <div><div class="rs-num" data-count="30" data-suffix="%">0</div><div class="rs-label">accuracy lift</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="reveal">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">About</h2><div class="sec-line"></div></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm <strong>Shiv Kumar Paswan</strong>, an AI Developer based in Bangalore with over four years of experience building machine learning and Generative AI systems for financial analysis, enterprise knowledge management, and operational forecasting.</p>
+        <p>My work spans the full stack of applied AI — from architecting retrieval and prompt frameworks for enterprise LLM assistants, to building classical ML models for credit scoring, demand forecasting, and time-series prediction. I care about models that hold up in production, not just in a notebook.</p>
+        <p>I've worked across fintech, industrial automation, and consulting, translating messy real-world data into dashboards, forecasts, and systems that teams actually rely on.</p>
+      </div>
+      <dl class="fact-list">
+        <div><dt>Location</dt><dd>Bangalore, India</dd></div>
+        <div><dt>Role</dt><dd>AI Developer</dd></div>
+        <div><dt>Focus</dt><dd>GenAI · ML · Financial Analytics</dd></div>
+        <div><dt>Education</dt><dd>B.Tech, CSE — CGPA 8.3</dd></div>
+        <div><dt>Email</dt><dd>kshiv7792@gmail.com</dd></div>
+        <div><dt>Phone</dt><dd>+91 97711 71907</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="reveal">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Skills</h2><div class="sec-line"></div></div>
+    <p class="ask-sub">Hover or tap a node to see what's inside.</p>
+    <div class="skills-wrap">
+      <svg id="skillGraph" class="skill-graph" viewBox="0 0 700 460"></svg>
+      <div class="skill-panel" id="skillPanel">
+        <div class="skill-panel-title">core</div>
+        <div class="skill-panel-tags"><span>select a node</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="reveal">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">Experience</h2><div class="sec-line"></div></div>
+    <div class="timeline" id="timeline">
+      <div class="tl-line"><div class="tl-line-fill" id="tlLineFill"></div></div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Sep 2025 — Present</div>
+        <div class="tl-content">
+          <h3 class="tl-role">AI Developer</h3>
+          <div class="tl-org">Yokogawa · Bangalore, India</div>
+          <div class="tl-body">
+            Leading development of AI-powered knowledge systems, including SmartChat — an enterprise LLM assistant delivering accurate, citation-driven answers over complex engineering documentation.
+            <ul>
+              <li>Architected and optimized Azure Cognitive Search pipelines and prompt frameworks for scalable, high-precision AI solutions.</li>
+              <li>Deployed retrieval-augmented systems across product and support teams.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Sep 2024 — Sep 2025</div>
+        <div class="tl-content">
+          <h3 class="tl-role">Data Scientist</h3>
+          <div class="tl-org">TechPay.AI · Bangalore, India</div>
+          <div class="tl-body">
+            <ul>
+              <li>Developed and deployed ML models that improved financial data analysis accuracy by 30%.</li>
+              <li>Collaborated cross-functionally to integrate AI solutions into product, lifting operational efficiency by 20%.</li>
+              <li>Built and automated Power BI dashboards for faster, data-driven stakeholder decisions.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Jul 2023 — May 2024</div>
+        <div class="tl-content">
+          <h3 class="tl-role">Project Consultant</h3>
+          <div class="tl-org">AiSPRY / 360DigiTMG · Malaysia</div>
+          <div class="tl-body">
+            Led data science and analysis projects, guiding teams in leveraging data to derive insights and drive strategic decisions that improved project outcomes.
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Dec 2021 — May 2024</div>
+        <div class="tl-content">
+          <h3 class="tl-role">Data Scientist</h3>
+          <div class="tl-org">AiSPRY / 360DigiTMG · Bangalore</div>
+          <div class="tl-body">
+            Built and evaluated data models on Azure, GCP and Heroku, applying SQL, Python, Power BI and PySpark to strategic decision-making and business growth problems.
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Nov 2021 — Dec 2021</div>
+        <div class="tl-content">
+          <h3 class="tl-role">Data Analyst Intern</h3>
+          <div class="tl-org">KPMG · Hyderabad</div>
+          <div class="tl-body">
+            Analyzed large datasets with Python, R and Excel; produced reports and dashboards in Tableau and Power BI for management insight.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="reveal">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">Projects</h2><div class="sec-line"></div></div>
+
+    <div class="proj-filters" id="projFilters">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="genai">GenAI / LLM</button>
+      <button class="chip" data-filter="forecast">Forecasting</button>
+      <button class="chip" data-filter="vision">Vision</button>
+      <button class="chip" data-filter="ml">Classical ML</button>
+      <button class="chip" data-filter="systems">Systems</button>
+    </div>
+
+    <div class="proj-grid" id="projGrid">
+
+      <article class="proj-card" data-tags="genai systems">
+        <div class="proj-index">/ 01</div>
+        <h3>SmartChat AI Agent</h3>
+        <p>Enterprise LLM assistant delivering citation-backed answers over complex engineering documentation.</p>
+        <div class="proj-tags"><span>RAG</span><span>Azure Cognitive Search</span><span>Prompt Engineering</span></div>
+        <button class="proj-expand" aria-label="Expand">+</button>
+        <div class="proj-more">Built as part of Yokogawa's internal knowledge tooling — retrieves relevant document passages before generating an answer, so responses stay grounded in the source documentation rather than the model's own memory.</div>
+      </article>
+
+      <article class="proj-card" data-tags="genai vision">
+        <div class="proj-index">/ 02</div>
+        <h3>Vision &amp; Voice GenAI Chatbot</h3>
+        <p>Multimodal chatbot combining vision and voice generation for conversational, image-aware interactions.</p>
+        <div class="proj-tags"><span>Multimodal</span><span>GenAI</span><span>Voice</span></div>
+        <button class="proj-expand" aria-label="Expand">+</button>
+        <div class="proj-more">Combines image understanding with generated voice responses, aimed at interactions where typing isn't the natural interface — reading a scene and talking through what's in it.</div>
+      </article>
+
+      <article class="proj-card" data-tags="vision ml">
+        <div class="proj-index">/ 03</div>
+        <h3>Image-to-Text Processing</h3>
+        <p>Pipeline converting visual input into structured text for downstream automation and search.</p>
+        <div class="proj-tags"><span>OCR</span><span>Computer Vision</span></div>
+        <button class="proj-expand" aria-label="Expand">+</button>
+        <div class="proj-more">Turns scanned or photographed documents into structured, searchable text, feeding cleanly into automation and indexing pipelines downstream.</div>
+      </article>
+
+      <article class="proj-card" data-tags="forecast ml">
+        <div class="proj-index">/ 04</div>
+        <h3>Medical Inventory Optimization</h3>
+        <p>Forecasting and optimization system to reduce stockouts and overstock across medical inventory.</p>
+        <div class="proj-tags"><span>Time Series</span><span>Optimization</span></div>
+        <button class="proj-expand" aria-label="Expand">+</button>
+        <div class="proj-more">Forecasts demand at the item level so ordering decisions can be made ahead of shortages, balancing holding cost against stockout risk.</div>
+      </article>
+
+      <article class="proj-card" data-tags="ml">
+        <div class="proj-index">/ 05</div>
+        <h3>Mental Health &amp; Wellbeing Analysis</h3>
+        <p>Statistical study of mental health trends during the pandemic using survey and behavioral data.</p>
+        <div class="proj-tags"><span>Statistics</span><span>EDA</span></div>
+        <button class="proj-expand" aria-label="Expand">+</button>
+        <div class="proj-more">Applies hypothesis testing and exploratory analysis to survey data, looking for patterns in wellbeing shifts across the pandemic period.</div>
+      </article>
+
+      <article class="proj-card" data-tags="ml">
+        <div class="proj-index">/ 06</div>
+        <h3>Pharmacy Credit Scoring</h3>
+        <p>Credit scoring model for pharmacy customers built on classical ML and statistical techniques.</p>
+        <div class="proj-tags"><span>Classification</span><span>Risk Scoring</span></div>
+        <button class="proj-expand" aria-label="Expand">+</button>
+        <div class="proj-more">Scores customer credit risk using classification models, giving the business a consistent way to evaluate new accounts.</div>
+      </article>
+
+      <article class="proj-card" data-tags="forecast ml">
+        <div class="proj-index">/ 07</div>
+        <h3>Wind Turbine Failure Prediction</h3>
+        <p>Predictive maintenance model flagging turbine failures ahead of time from sensor data.</p>
+        <div class="proj-tags"><span>Predictive Maintenance</span><span>Sensor Data</span></div>
+        <button class="proj-expand" aria-label="Expand">+</button>
+        <div class="proj-more">Uses sensor telemetry to flag turbines likely to fail soon, aiming to shift maintenance from reactive to scheduled.</div>
+      </article>
+
+      <article class="proj-card" data-tags="systems forecast">
+        <div class="proj-index">/ 08</div>
+        <h3>Steel Rod Inventory System</h3>
+        <p>Inventory management system for steel rod stock, tracking and forecasting demand.</p>
+        <div class="proj-tags"><span>Inventory</span><span>Forecasting</span></div>
+        <button class="proj-expand" aria-label="Expand">+</button>
+        <div class="proj-more">Tracks stock movement and forecasts upcoming demand for steel rod inventory, helping keep supply aligned with usage.</div>
+      </article>
+
+      <article class="proj-card" data-tags="vision systems">
+        <div class="proj-index">/ 09</div>
+        <h3>Plant Health Monitoring</h3>
+        <p>Monitoring system for tracking plant health indicators and flagging anomalies early.</p>
+        <div class="proj-tags"><span>Anomaly Detection</span><span>Monitoring</span></div>
+        <button class="proj-expand" aria-label="Expand">+</button>
+        <div class="proj-more">Watches plant health indicators over time and surfaces anomalies early, before they turn into visible damage.</div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION & CERTS -->
+  <section id="education" class="reveal">
+    <div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title">Education &amp; Certificates</h2><div class="sec-line"></div></div>
+    <div class="edu-cert-grid">
+      <div>
+        <div class="edu-card">
+          <h3>B.Tech, Computer Science &amp; Engineering</h3>
+          <div class="edu-sub">Millia Institute of Technology · 2017 – 2021</div>
+          <p>CGPA: 8.3 — Focused in Data Science &amp; Analysis, Patna, India.</p>
+        </div>
+      </div>
+      <div class="cert-list">
+        <div class="cert-group">
+          <div class="cert-org">IBM</div>
+          <div class="cert-items"><span>Data Science using Python</span><span>Python 101 for Data Science</span></div>
+        </div>
+        <div class="cert-group">
+          <div class="cert-org">Great Learning Academy</div>
+          <div class="cert-items"><span>Generative AI</span></div>
+        </div>
+        <div class="cert-group">
+          <div class="cert-org">NASSCOM FutureSkills</div>
+          <div class="cert-items"><span>Data Science</span><span>Python Fundamentals</span></div>
+        </div>
+        <div class="cert-group">
+          <div class="cert-org">360DigiTMG</div>
+          <div class="cert-items"><span>Data Science using Python</span><span>Data Visualization using Tableau</span><span>Data Visualization using Power BI</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-inner">
+      <div class="contact-eyebrow">06 / Contact</div>
+      <h2 class="contact-title">Have a project in mind, or just want to talk about AI systems?</h2>
+      <div class="contact-links">
+        <button class="btn btn-primary magnetic copy-btn" data-copy="kshiv7792@gmail.com">
+          <span class="copy-label">kshiv7792@gmail.com</span>
+          <span class="copy-done">Copied ✓</span>
+        </button>
+        <button class="btn btn-ghost magnetic copy-btn" data-copy="+919771171907">
+          <span class="copy-label">+91 97711 71907</span>
+          <span class="copy-done">Copied ✓</span>
+        </button>
+        <a class="btn btn-ghost magnetic" href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Shiv Kumar Paswan</span>
+      <span>Bangalore, India</span>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING JARVIS WIDGET -->
+<div class="jarvis-widget">
+  <div class="jarvis-panel" id="jarvisPanel">
+    <div class="jarvis-head">
+      <div class="jarvis-head-left">
+        <div class="jarvis-ring"><div class="jarvis-ring-core"></div></div>
+        <div>
+          <div class="jarvis-name">Jarvis</div>
+          <div class="jarvis-status"><span class="jarvis-status-dot"></span> online — scripted assistant</div>
+        </div>
+      </div>
+      <button class="jarvis-close" id="jarvisClose" aria-label="Close">✕</button>
+    </div>
+    <p class="jarvis-note">Trained on one resume. Tap a question — no backend, nothing leaves your browser.</p>
+    <div class="ask-chat" id="askChat">
+      <div class="chat-row bot">
+        <div class="chat-bubble">Hi, I'm Jarvis. I can answer a few questions about Shiv's work. Pick one below.</div>
+      </div>
+    </div>
+    <div class="ask-chips" id="askChips"></div>
+  </div>
+
+  <button class="jarvis-fab" id="jarvisFab" aria-label="Open Jarvis">
+    <span class="jarvis-fab-ring"></span>
+    <span class="jarvis-fab-core">J</span>
+  </button>
+  <div class="jarvis-tooltip" id="jarvisTooltip">Ask Jarvis about me →</div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
