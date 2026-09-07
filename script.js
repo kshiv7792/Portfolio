@@ -52,7 +52,6 @@
     scrollProgress.style.width = (scrolled || 0) + '%';
   }
   let scrollFrame = 0;
-  let scrollStopTimer;
   function scheduleScrollUpdate(){
     if (!scrollFrame) {
       scrollFrame = requestAnimationFrame(() => {
@@ -60,16 +59,6 @@
         updateScrollProgress();
         updateTimelineFill();
       });
-    }
-    if (!reducedMotion) {
-      clearTimeout(scrollStopTimer);
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = 0;
-      }
-      scrollStopTimer = setTimeout(() => {
-        drawNeural();
-      }, 140);
     }
   }
   document.addEventListener('scroll', scheduleScrollUpdate, { passive: true });
@@ -131,6 +120,14 @@
       r: Math.random() * 1.4 + 0.8
     }));
   }
+  const universeStars = Array.from({ length: window.innerWidth < 720 ? 90 : 150 }, () => ({
+    angle: Math.random() * Math.PI * 2,
+    spread: 0.18 + Math.random() * 1.2,
+    z: 0.05 + Math.random() * 0.95,
+    speed: 0.0018 + Math.random() * 0.0028,
+    size: 0.4 + Math.random() * 1.5,
+    tint: Math.random() > 0.72 ? '62,201,172' : '183,174,252'
+  }));
   resizeCanvas(); initNodes();
   window.addEventListener('resize', () => { resizeCanvas(); initNodes(); });
   window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
@@ -139,6 +136,48 @@
   const LINK_DIST = 130;
   const shootingStars = [];
   let nextStarAt = performance.now() + 3500;
+
+  function drawUniverseTravel(now){
+    const centerX = W * 0.5 + (mouseX > -999 ? (mouseX - W * 0.5) * 0.035 : 0);
+    const centerY = H * 0.5 + (mouseY > -999 ? (mouseY - H * 0.5) * 0.035 : 0);
+    const maxDistance = Math.max(W, H) * 0.9;
+    for (const star of universeStars) {
+      const previousZ = star.z;
+      star.z -= star.speed;
+      if (star.z <= 0.018) {
+        star.angle = Math.random() * Math.PI * 2;
+        star.spread = 0.18 + Math.random() * 1.2;
+        star.z = 1;
+      }
+      const distance = maxDistance * star.spread;
+      const previousScale = 1 / previousZ;
+      const scale = 1 / star.z;
+      const oldX = centerX + Math.cos(star.angle) * distance * previousScale * 0.18;
+      const oldY = centerY + Math.sin(star.angle) * distance * previousScale * 0.18;
+      const x = centerX + Math.cos(star.angle) * distance * scale * 0.18;
+      const y = centerY + Math.sin(star.angle) * distance * scale * 0.18;
+      if (x < -80 || x > W + 80 || y < -80 || y > H + 80) {
+        star.z = 1;
+        continue;
+      }
+      const brightness = Math.min(0.72, 0.12 + (1 - star.z) * 0.62);
+      const radius = star.size * (0.5 + (1 - star.z) * 1.8);
+      ctx.beginPath();
+      ctx.moveTo(oldX, oldY);
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = `rgba(${star.tint},${brightness * 0.55})`;
+      ctx.lineWidth = radius;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(236,235,230,${brightness})`;
+      ctx.fill();
+    }
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(183,174,252,.22)';
+    ctx.fill();
+  }
 
   function spawnShootingStar(now){
     const fromLeft = Math.random() > 0.35;
@@ -189,6 +228,7 @@
   function drawNeural(){
     const now = performance.now();
     ctx.clearRect(0, 0, W, H);
+    drawUniverseTravel(now);
     for (const n of nodes) {
       n.x += n.vx; n.y += n.vy;
       if (n.x < 0 || n.x > W) n.vx *= -1;
