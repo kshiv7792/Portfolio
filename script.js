@@ -137,8 +137,57 @@
   window.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
 
   const LINK_DIST = 130;
+  const shootingStars = [];
+  let nextStarAt = performance.now() + 3500;
+
+  function spawnShootingStar(now){
+    const fromLeft = Math.random() > 0.35;
+    shootingStars.push({
+      x: fromLeft ? Math.random() * W * 0.7 : W * 0.3 + Math.random() * W * 0.7,
+      y: Math.random() * H * 0.55,
+      vx: fromLeft ? 7 + Math.random() * 4 : -7 - Math.random() * 4,
+      vy: 3 + Math.random() * 3,
+      length: 70 + Math.random() * 55,
+      born: now,
+      life: 700 + Math.random() * 500
+    });
+    nextStarAt = now + 4500 + Math.random() * 7500;
+  }
+
+  function drawShootingStars(now){
+    if (now >= nextStarAt) spawnShootingStar(now);
+    for (let i = shootingStars.length - 1; i >= 0; i--) {
+      const star = shootingStars[i];
+      const age = now - star.born;
+      const progress = age / star.life;
+      if (progress >= 1) {
+        shootingStars.splice(i, 1);
+        continue;
+      }
+      star.x += star.vx;
+      star.y += star.vy;
+      const fade = Math.sin(progress * Math.PI);
+      const tailX = star.x - star.vx * star.length / 10;
+      const tailY = star.y - star.vy * star.length / 10;
+      const gradient = ctx.createLinearGradient(tailX, tailY, star.x, star.y);
+      gradient.addColorStop(0, 'rgba(183,174,252,0)');
+      gradient.addColorStop(0.7, `rgba(139,124,246,${fade * 0.28})`);
+      gradient.addColorStop(1, `rgba(236,235,230,${fade * 0.95})`);
+      ctx.beginPath();
+      ctx.moveTo(tailX, tailY);
+      ctx.lineTo(star.x, star.y);
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = 1.4;
+      ctx.shadowColor = 'rgba(183,174,252,.8)';
+      ctx.shadowBlur = 8 * fade;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+  }
+
   let rafId;
   function drawNeural(){
+    const now = performance.now();
     ctx.clearRect(0, 0, W, H);
     for (const n of nodes) {
       n.x += n.vx; n.y += n.vy;
@@ -168,6 +217,7 @@
       ctx.fillStyle = 'rgba(62,201,172,0.55)';
       ctx.fill();
     }
+    drawShootingStars(now);
     rafId = requestAnimationFrame(drawNeural);
   }
   if (!reducedMotion) {
