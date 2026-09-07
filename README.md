@@ -1,51 +1,71 @@
 # Shiv Kumar Paswan — Interactive AI Portfolio
 
-3 files, koi build step nahi — pure HTML/CSS/JS. Seedha Vercel pe deploy ho jayega.
+3 files, no build step — pure HTML/CSS/JS. It can be deployed directly to Vercel.
 
-## Kya kya interactive hai
-- **Boot screen** — page load pe ek "initializing..." animation
-- **Neural network background** — canvas pe animated nodes/lines jo mouse ke paas react karte hain
-- **Custom cursor** — desktop pe glowing ring cursor, links/buttons pe hover karne se badhta hai
-- **Terminal hero** — typewriter effect me commands type hoke output dikhate hain, loop me
-- **"Ask about me"** — ek chota scripted chat widget, chip pe click karo aur AI-style typed answer milta hai (poori tarah client-side, koi backend/API nahi)
-- **Skill constellation** — hover/tap se skill category ka detail dikhta hai, connected line highlight hoti hai
-- **Scroll-animated timeline** — line progressively fill hoti hai jaise scroll karte ho
-- **Filterable project grid** — category chips se filter, aur har card expand hoke extra detail dikhata hai
-- **Magnetic buttons**, **scroll progress bar**, **copy-to-clipboard contact buttons**
-- Sab kuch `prefers-reduced-motion` respect karta hai — jinko motion pasand nahi unke liye animations off ho jaati hain
+## What's Interactive
+
+* **Boot screen** — An `"initializing..."` animation appears when the page loads.
+* **Neural network background** — Animated nodes and connecting lines on a canvas that react to mouse movement.
+* **Custom cursor** — A glowing ring cursor on desktop that expands when hovering over links and buttons.
+* **Terminal hero** — Commands are typed out with a typewriter effect, displaying output in a continuous loop.
+* **"Ask about me"** — A small scripted chat widget. Click a chip to get an AI-style typed response. Everything runs client-side with no backend/API.
+* **Skill constellation** — Hover or tap on a skill category to view details, with the connected line highlighted.
+* **Scroll-animated timeline** — The timeline progressively fills as you scroll through the section.
+* **Filterable project grid** — Filter projects using category chips, and expand each project card to view additional details.
+* **Magnetic buttons**, **scroll progress bar**, and **copy-to-clipboard contact buttons**.
+* Everything respects **`prefers-reduced-motion`** — animations are disabled for users who prefer reduced motion.
 
 ## Files
-- `index.html` — structure/content
-- `styles.css` — sab styling
-- `script.js` — sab interactivity
 
-## Local pe dekhna
-`index.html` ko seedha browser me kholo — kaam karega. (Best experience ke liye ek local server se chalao, kyunki kuch browsers file:// se fetch pe thoda strict hote hain — ye site koi external fetch use nahi karti toh normally seedha bhi chal jayega.)
+* `index.html` — Structure and content
+* `styles.css` — All styling
+* `script.js` — All interactivity
 
-## Vercel pe deploy karna
+## View Locally
 
-### Option A — CLI se (fastest)
-Is folder ke andar terminal khol ke:
+Open `index.html` directly in your browser — it will work.
+
+For the best experience, you can run it using a local server, as some browsers can be strict about `fetch` requests when using `file://`. However, this site does not use any external fetch requests, so opening it directly should normally work fine.
+
+## Deploy to Vercel
+
+### Option A — Using the CLI (Fastest)
+
+Open a terminal inside this folder and run:
+
 ```bash
 npm install -g vercel
+
 vercel login
+
 vercel
 ```
-Sawaal aayenge, sab default (Enter) daboke aage badho. Live URL mil jayegi.
-Update karne ke baad: `vercel --prod`
 
-### Option B — Website se
-1. [vercel.com](https://vercel.com) pe GitHub se login karo.
-2. Is folder ko ek GitHub repo me push karo.
-3. Vercel dashboard → "Add New Project" → repo import karo → Framework "Other" rakho → Deploy.
-4. Ab har naye push pe auto-deploy hoga.
+You will be asked a few questions. Press **Enter** to accept the default options.
 
-## Customize karna
-- **Colors/fonts** — `styles.css` ke top pe `:root { ... }` me saare CSS variables hain.
-- **Terminal lines** — `script.js` me `termLines` array edit karo.
-- **Ask-AI answers** — `script.js` me `QA` array edit karo (naye sawaal-jawab add/remove kar sakte ho).
-- **Skills** — `script.js` me `skillData` array edit karo.
-- **GitHub link** — `index.html` me "GitHub ↗" wale `<a href="...">` me apna asli profile URL daal dena.
-- **Projects** — `index.html` me har `.proj-card` ke andar text, `data-tags` (filter ke liye) aur `.proj-more` (expand wala extra text) edit kar sakte ho.
+Vercel will provide you with a live URL once the deployment is complete.
 
-Kuch bhi tweak karna ho ya naya interactive section chahiye ho toh bata dena.
+After making updates, deploy the production version with:
+
+```bash
+vercel --prod
+```
+
+### Option B — Using the Website
+
+1. Go to [vercel.com](https://vercel.com?utm_source=chatgpt.com) and log in with GitHub.
+2. Push this folder to a GitHub repository.
+3. In the Vercel dashboard, go to **Add New Project** and import the repository.
+4. Keep the Framework set to **Other**, then click **Deploy**.
+5. Every new push to the repository will automatically trigger a new deployment.
+
+## Customize
+
+* **Colors/fonts** — Edit the CSS variables inside `:root { ... }` at the top of `styles.css`.
+* **Terminal lines** — Edit the `termLines` array in `script.js`.
+* **Ask-AI answers** — Edit the `QA` array in `script.js`. You can add or remove questions and answers.
+* **Skills** — Edit the `skillData` array in `script.js`.
+* **GitHub link** — In `index.html`, update the actual profile URL inside the `<a href="...">` for **"GitHub ↗"**.
+* **Projects** — Edit the text, `data-tags` (used for filtering), and `.proj-more` (expanded details) inside each `.proj-card` in `index.html`.
+
+If you want to tweak anything or add a new interactive section, just let me know.
