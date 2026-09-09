@@ -351,68 +351,6 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  /* ============ ASK AI CHAT ============ */
-  const QA = [
-    { q: "What do you actually work on?", a: "I build applied AI systems — mostly Generative AI assistants and ML models for forecasting, classification and financial analysis. Right now that's SmartChat, an enterprise LLM assistant at Yokogawa." },
-    { q: "What's your tech stack?", a: "Python and SQL as the core, ML frameworks for classical and time-series models, PySpark for big data, and Azure / AWS / GCP for deployment — plus Power BI and Tableau for the reporting side." },
-    { q: "Tell me about SmartChat.", a: "SmartChat is an enterprise LLM assistant I've been building at Yokogawa. It uses retrieval-augmented generation over Azure Cognitive Search, so answers stay grounded in the actual engineering documentation instead of the model guessing." },
-    { q: "What's a project you're proud of?", a: "The financial ML work at TechPay.AI — the models I shipped there improved financial data analysis accuracy by about 30%, which directly changed how the team made decisions." },
-    { q: "How can I reach you?", a: "Easiest is email — kshiv7792@gmail.com — or the phone number in the contact section below. Both are one click away." }
-  ];
-  const askChat = document.getElementById('askChat');
-  const askChips = document.getElementById('askChips');
-
-  QA.forEach((item, idx) => {
-    const b = document.createElement('button');
-    b.textContent = item.q;
-    b.dataset.idx = idx;
-    b.addEventListener('click', () => askQuestion(idx, b));
-    askChips.appendChild(b);
-  });
-
-  async function askQuestion(idx, btn){
-    const chipButtons = askChips.querySelectorAll('button');
-    chipButtons.forEach(c => c.disabled = true);
-
-    const userRow = document.createElement('div');
-    userRow.className = 'chat-row user';
-    userRow.innerHTML = `<div class="chat-bubble">${QA[idx].q}</div>`;
-    askChat.appendChild(userRow);
-    askChat.scrollTop = askChat.scrollHeight;
-
-    await new Promise(r => setTimeout(r, 300));
-
-    const typingRow = document.createElement('div');
-    typingRow.className = 'chat-row bot';
-    typingRow.innerHTML = `<div class="chat-bubble"><span class="chat-typing"><span></span><span></span><span></span></span></div>`;
-    askChat.appendChild(typingRow);
-    askChat.scrollTop = askChat.scrollHeight;
-
-    await new Promise(r => setTimeout(r, 700 + Math.random() * 400));
-    typingRow.remove();
-
-    const botRow = document.createElement('div');
-    botRow.className = 'chat-row bot';
-    const bubble = document.createElement('div');
-    bubble.className = 'chat-bubble';
-    botRow.appendChild(bubble);
-    askChat.appendChild(botRow);
-
-    if (reducedMotion) {
-      bubble.textContent = QA[idx].a;
-    } else {
-      const text = QA[idx].a;
-      for (let i = 0; i <= text.length; i += 2) {
-        bubble.textContent = text.slice(0, i);
-        askChat.scrollTop = askChat.scrollHeight;
-        await new Promise(r => setTimeout(r, 8));
-      }
-      bubble.textContent = text;
-    }
-    askChat.scrollTop = askChat.scrollHeight;
-    chipButtons.forEach(c => c.disabled = false);
-  }
-
   /* ============ SKILL GRAPH ============ */
   const skillData = [
     { id: 'lang', label: 'Languages', tags: ['Python', 'R', 'SQL', 'C++', 'Advanced Excel'] },
@@ -577,7 +515,6 @@
   function openJarvis(){
     jarvisWidget.classList.add('open');
     jarvisTooltip.classList.remove('show');
-    askChat.scrollTop = askChat.scrollHeight;
   }
   function closeJarvis(){ jarvisWidget.classList.remove('open'); }
   function toggleJarvis(){ jarvisWidget.classList.contains('open') ? closeJarvis() : openJarvis(); }

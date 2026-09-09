@@ -404,18 +404,21 @@
         <div class="jarvis-ring"><div class="jarvis-ring-core"></div></div>
         <div>
           <div class="jarvis-name">Jarvis</div>
-          <div class="jarvis-status"><span class="jarvis-status-dot"></span> online — scripted assistant</div>
+          <div class="jarvis-status"><span class="jarvis-status-dot"></span> live — Streamlit assistant</div>
         </div>
       </div>
       <button class="jarvis-close" id="jarvisClose" aria-label="Close">✕</button>
     </div>
-    <p class="jarvis-note">Portfolio assistant — client-side only, nothing leaves your browser.</p>
-    <div class="ask-chat" id="askChat">
-      <div class="chat-row bot">
-        <div class="chat-bubble">Hi, I'm Jarvis. I can answer questions about Shiv's experience, skills and projects.</div>
-      </div>
+    <p class="jarvis-note">Ask Jarvis about Shiv's experience, skills, and projects.</p>
+    <div class="jarvis-embed-wrap">
+      <iframe
+        class="jarvis-embed"
+        src="https://jarvis-resume-chatbot.streamlit.app/?embed=true"
+        title="Jarvis resume assistant"
+        loading="lazy"
+        allow="clipboard-write"
+      ></iframe>
     </div>
-    <div class="ask-chips" id="askChips"></div>
   </div>
 
   <button class="jarvis-fab" id="jarvisFab" aria-label="Open Jarvis">
