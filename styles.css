@@ -428,7 +428,9 @@ footer{ padding: 90px 0 40px; position: relative; z-index: 1; }
   section{ padding: 56px 0; }
 }
 
-@media (max-width: 560px){
+@media (max-width: 720px){
+  html, body{ width:100%; max-width:100%; overflow-x:hidden; }
+  .wrap, main, section, .hero-grid, .hero-copy, .hero-visual-wrap, .skills-wrap, .timeline{ min-width:0; max-width:100%; }
   .hero{ padding-top:54px; }
   .eyebrow-line{ font-size:10px; margin-bottom:20px; }
   h1.hero-title{ font-size:clamp(37px, 11vw, 54px); line-height:1.06; margin-bottom:22px; }
@@ -436,11 +438,16 @@ footer{ padding: 90px 0 40px; position: relative; z-index: 1; }
   .hero-actions{ align-items:stretch; flex-direction:column; max-width:290px; margin-bottom:30px; }
   .hero-actions .btn{ flex-basis:100%; justify-content:space-between; width:100%; }
   .hero-meta{ display:block; font-size:10px; line-height:2; }
+  .hero-visual-wrap{ width:100%; }
+  .terminal{ width:100%; max-width:100%; }
   .dashboard-body{ padding:16px 14px 14px; }
   .dashboard-grid{ grid-template-columns:1fr; }
   .signal-panel{ display:grid; grid-template-columns:1fr auto; align-items:center; gap:6px 12px; }
   .signal-number{ margin:0; }.signal-bars{ grid-column:1 / -1; }.signal-foot{ margin:0; }
   .terminal-head{ padding:11px 12px; font-size:10px; gap:8px; }.terminal-live{ display:none; }
+  .terminal-head > span{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .skill-graph{ display:block; width:100%; max-width:100%; }
+  .skill-panel{ min-width:0; max-width:100%; }
   .floating-readout{ display:none; }
   .hero-scroll{ left:20px; bottom:20px; }
 }
