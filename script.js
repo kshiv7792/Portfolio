@@ -100,9 +100,27 @@
   navBurger.addEventListener('click', () => navMobile.classList.toggle('open'));
   navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navMobile.classList.remove('open')));
 
+  /* ============ THEME TOGGLE ============ */
+  const themeToggle = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('portfolio-theme');
+  const preferredTheme = savedTheme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  document.documentElement.setAttribute('data-theme', preferredTheme);
+  themeToggle.setAttribute('aria-label', preferredTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+  themeToggle.title = preferredTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    localStorage.setItem('portfolio-theme', nextTheme);
+    themeToggle.setAttribute('aria-label', nextTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    themeToggle.title = nextTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+  });
+
   /* ============ NEURAL CANVAS BACKGROUND ============ */
   const canvas = document.getElementById('neuralCanvas');
   const ctx = canvas.getContext('2d');
+  const isLightTheme = () => document.documentElement.getAttribute('data-theme') === 'light';
   let W, H, nodes = [];
   const NODE_COUNT = window.innerWidth < 720 ? 34 : 68;
   let mouseX = -9999, mouseY = -9999;
@@ -126,7 +144,7 @@
     z: 0.05 + Math.random() * 0.95,
     speed: 0.0018 + Math.random() * 0.0028,
     size: 0.4 + Math.random() * 1.5,
-    tint: Math.random() > 0.72 ? '62,201,172' : '183,174,252'
+    tint: Math.random() > 0.72 ? (isLightTheme() ? '69,101,168' : '62,201,172') : (isLightTheme() ? '95,82,232' : '183,174,252')
   }));
   resizeCanvas(); initNodes();
   window.addEventListener('resize', () => { resizeCanvas(); initNodes(); });
@@ -138,6 +156,7 @@
   let nextStarAt = performance.now() + 3500;
 
   function drawUniverseTravel(now){
+    const lightMode = isLightTheme();
     const centerX = W * 0.5 + (mouseX > -999 ? (mouseX - W * 0.5) * 0.035 : 0);
     const centerY = H * 0.5 + (mouseY > -999 ? (mouseY - H * 0.5) * 0.035 : 0);
     const maxDistance = Math.max(W, H) * 0.9;
@@ -160,17 +179,19 @@
         star.z = 1;
         continue;
       }
-      const brightness = Math.min(0.72, 0.12 + (1 - star.z) * 0.62);
+      const brightness = Math.min(0.9, 0.2 + (1 - star.z) * 0.7);
       const radius = star.size * (0.5 + (1 - star.z) * 1.8);
+      const lineAlpha = lightMode ? brightness * 0.75 : brightness * 0.55;
+      const fillAlpha = lightMode ? brightness * 1.15 : brightness;
       ctx.beginPath();
       ctx.moveTo(oldX, oldY);
       ctx.lineTo(x, y);
-      ctx.strokeStyle = `rgba(${star.tint},${brightness * 0.55})`;
+      ctx.strokeStyle = `rgba(${star.tint},${lineAlpha})`;
       ctx.lineWidth = radius;
       ctx.stroke();
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(236,235,230,${brightness})`;
+      ctx.fillStyle = lightMode ? `rgba(0,0,0,${Math.min(1, fillAlpha + 0.15)})` : `rgba(255,255,255,${Math.min(1, fillAlpha + 0.12)})`;
       ctx.fill();
     }
     ctx.beginPath();
@@ -194,6 +215,7 @@
   }
 
   function drawShootingStars(now){
+    const lightMode = isLightTheme();
     if (now >= nextStarAt) spawnShootingStar(now);
     for (let i = shootingStars.length - 1; i >= 0; i--) {
       const star = shootingStars[i];
@@ -209,15 +231,18 @@
       const tailX = star.x - star.vx * star.length / 10;
       const tailY = star.y - star.vy * star.length / 10;
       const gradient = ctx.createLinearGradient(tailX, tailY, star.x, star.y);
-      gradient.addColorStop(0, 'rgba(183,174,252,0)');
-      gradient.addColorStop(0.7, `rgba(139,124,246,${fade * 0.28})`);
-      gradient.addColorStop(1, `rgba(236,235,230,${fade * 0.95})`);
+      const startColor = lightMode ? 'rgba(95,82,232,0)' : 'rgba(183,174,252,0)';
+      const midColor = lightMode ? `rgba(95,82,232,${fade * 0.38})` : `rgba(139,124,246,${fade * 0.28})`;
+      const endColor = lightMode ? `rgba(0,0,0,${fade * 0.9})` : `rgba(255,255,255,${fade * 0.95})`;
+      gradient.addColorStop(0, startColor);
+      gradient.addColorStop(0.7, midColor);
+      gradient.addColorStop(1, endColor);
       ctx.beginPath();
       ctx.moveTo(tailX, tailY);
       ctx.lineTo(star.x, star.y);
       ctx.strokeStyle = gradient;
       ctx.lineWidth = 1.4;
-      ctx.shadowColor = 'rgba(183,174,252,.8)';
+      ctx.shadowColor = lightMode ? 'rgba(95,82,232,.8)' : 'rgba(183,174,252,.8)';
       ctx.shadowBlur = 8 * fade;
       ctx.stroke();
       ctx.shadowBlur = 0;
@@ -226,6 +251,7 @@
 
   let rafId;
   function drawNeural(){
+    const lightMode = isLightTheme();
     const now = performance.now();
     ctx.clearRect(0, 0, W, H);
     drawUniverseTravel(now);
@@ -242,8 +268,8 @@
         const a = nodes[i], b = nodes[j];
         const dist = Math.hypot(a.x - b.x, a.y - b.y);
         if (dist < LINK_DIST) {
-          const o = (1 - dist / LINK_DIST) * 0.18;
-          ctx.strokeStyle = `rgba(139,124,246,${o})`;
+          const o = (1 - dist / LINK_DIST) * (lightMode ? 0.28 : 0.18);
+          ctx.strokeStyle = lightMode ? `rgba(95,82,232,${o})` : `rgba(139,124,246,${o})`;
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
@@ -254,7 +280,7 @@
     for (const n of nodes) {
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(62,201,172,0.55)';
+      ctx.fillStyle = lightMode ? 'rgba(0,0,0,0.9)' : 'rgba(255,255,255,0.85)';
       ctx.fill();
     }
     drawShootingStars(now);
@@ -268,7 +294,12 @@
     });
   } else {
     // static single frame
-    for (const n of nodes) { ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI*2); ctx.fillStyle='rgba(62,201,172,0.4)'; ctx.fill(); }
+    for (const n of nodes) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      ctx.fillStyle = isLightTheme() ? 'rgba(0,0,0,0.9)' : 'rgba(255,255,255,0.85)';
+      ctx.fill();
+    }
   }
 
   /* ============ TERMINAL TYPEWRITER ============ */
