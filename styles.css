@@ -402,8 +402,10 @@ footer{ padding: 90px 0 40px; position: relative; z-index: 1; }
 .jarvis-embed{ display:block; width:100%; height: min(560px, 68vh); min-height: 390px; border:0; background: var(--bg); }
 
 @media (max-width: 480px){
-  .jarvis-widget{ right: 16px; bottom: 16px; }
-  .jarvis-panel{ width: calc(100vw - 32px); }
+  .jarvis-widget{ right: 8px; bottom: 8px; left: 8px; align-items: stretch; }
+  .jarvis-panel{ width: 100%; max-width: none; max-height: calc(100dvh - 16px); height: calc(100dvh - 16px); border-radius: 12px; }
+  .jarvis-embed{ height: calc(100dvh - 126px); min-height: 0; }
+  .jarvis-fab{ align-self: flex-end; }
   .jarvis-tooltip{ display:none; }
 }
 
