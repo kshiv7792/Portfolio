@@ -25,6 +25,14 @@
 
 Open `index.html` directly in your browser — it will work.
 
+To use the local Jarvis app inside the portfolio, start Streamlit from `streamlit/Jarvis_dev`:
+
+```bash
+streamlit run app.py
+```
+
+The portfolio automatically uses `http://127.0.0.1:8501` locally and the deployed Streamlit app after deployment.
+
 For the best experience, you can run it using a local server, as some browsers can be strict about `fetch` requests when using `file://`. However, this site does not use any external fetch requests, so opening it directly should normally work fine.
 
 ## Deploy to Vercel

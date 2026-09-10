@@ -542,6 +542,16 @@
   const jarvisClose = document.getElementById('jarvisClose');
   const jarvisTooltip = document.getElementById('jarvisTooltip');
   const jarvisPanel = document.getElementById('jarvisPanel');
+  const jarvisEmbed = document.querySelector('.jarvis-embed');
+
+  // Use the local Streamlit app while developing the portfolio locally.
+  if (jarvisEmbed) {
+    const isLocalPortfolio = window.location.protocol === 'file:'
+      || ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    jarvisEmbed.src = isLocalPortfolio
+      ? jarvisEmbed.dataset.localSrc
+      : jarvisEmbed.dataset.remoteSrc;
+  }
 
   function openJarvis(){
     jarvisWidget.classList.add('open');
