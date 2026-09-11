@@ -542,26 +542,73 @@
   const jarvisClose = document.getElementById('jarvisClose');
   const jarvisTooltip = document.getElementById('jarvisTooltip');
   const jarvisPanel = document.getElementById('jarvisPanel');
-  const jarvisEmbed = document.querySelector('.jarvis-embed');
-  let jarvisLoaded = false;
+  const jarvisMessages = document.getElementById('jarvisMessages');
+  const jarvisChips = document.getElementById('jarvisChips');
+  const jarvisForm = document.getElementById('jarvisForm');
+  const jarvisInput = document.getElementById('jarvisInput');
+  const jarvisSend = document.getElementById('jarvisSend');
 
-  // Load the Streamlit app the first time the widget is actually opened,
-  // rather than on page load — this avoids the iframe failing to load
-  // while the panel is still hidden (display:none / not open).
-  function loadJarvisEmbed(){
-    if (!jarvisEmbed || jarvisLoaded) return;
-    const isLocalPortfolio = window.location.protocol === 'file:'
-      || ['localhost', '127.0.0.1'].includes(window.location.hostname);
-    jarvisEmbed.src = isLocalPortfolio
-      ? jarvisEmbed.dataset.localSrc
-      : jarvisEmbed.dataset.remoteSrc;
-    jarvisLoaded = true;
+  // The chatbot API is a Vercel serverless function living at /api/ask in
+  // this same project (see /api/index.py). Same-origin, so no CORS or
+  // third-party-cookie issues. Falls back to a local API port for anyone
+  // running `vercel dev` locally.
+  const JARVIS_API_URL = (window.location.protocol === 'file:')
+    ? 'http://127.0.0.1:3000/api/ask'
+    : '/api/ask';
+
+  function addJarvisMessage(role, text){
+    const el = document.createElement('div');
+    el.className = `jarvis-msg ${role}`;
+    el.textContent = text;
+    jarvisMessages.appendChild(el);
+    jarvisMessages.scrollTop = jarvisMessages.scrollHeight;
+    return el;
+  }
+
+  async function askJarvis(question){
+    if (!question.trim()) return;
+    jarvisChips.classList.add('hidden');
+    addJarvisMessage('user', question);
+    jarvisInput.value = '';
+    jarvisSend.disabled = true;
+
+    const thinkingEl = addJarvisMessage('assistant thinking', '…thinking');
+
+    try {
+      const res = await fetch(JARVIS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question })
+      });
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      const data = await res.json();
+      thinkingEl.textContent = data.answer || "Sorry, I couldn't find an answer to that.";
+      thinkingEl.classList.remove('thinking');
+    } catch (err) {
+      thinkingEl.textContent = "Jarvis is unreachable right now — please try again in a moment.";
+      thinkingEl.classList.remove('thinking');
+    } finally {
+      jarvisSend.disabled = false;
+    }
+  }
+
+  if (jarvisForm) {
+    jarvisForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      askJarvis(jarvisInput.value);
+    });
+  }
+
+  if (jarvisChips) {
+    jarvisChips.querySelectorAll('.jarvis-chip').forEach(chip => {
+      chip.addEventListener('click', () => askJarvis(chip.dataset.q));
+    });
   }
 
   function openJarvis(){
     jarvisWidget.classList.add('open');
     jarvisTooltip.classList.remove('show');
-    loadJarvisEmbed();
+    setTimeout(() => jarvisInput && jarvisInput.focus(), 200);
   }
   function closeJarvis(){ jarvisWidget.classList.remove('open'); }
   function toggleJarvis(){ jarvisWidget.classList.contains('open') ? closeJarvis() : openJarvis(); }

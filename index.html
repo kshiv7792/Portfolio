@@ -10,6 +10,127 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+  .jarvis-launch{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:16px;
+    padding:28px 22px;
+    text-align:left;
+  }
+  .jarvis-launch-copy{
+    margin:0;
+    font-size:13px;
+    line-height:1.55;
+    color:rgba(255,255,255,.6);
+  }
+  .jarvis-launch-btn{
+    align-self:flex-start;
+  }
+
+  /* Jarvis inline chat */
+  .jarvis-chat{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    padding:14px 16px 16px;
+    height: 100%;
+    min-height: 0;
+  }
+  .jarvis-messages{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    overflow-y:auto;
+    flex:1;
+    min-height:80px;
+    max-height: 46vh;
+    padding-right:2px;
+  }
+  .jarvis-msg{
+    max-width:88%;
+    padding:9px 13px;
+    border-radius:12px;
+    font-size:13.5px;
+    line-height:1.5;
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .jarvis-msg.user{
+    align-self:flex-end;
+    background:rgba(255,255,255,.06);
+    color:rgba(255,255,255,.9);
+  }
+  .jarvis-msg.assistant{
+    align-self:flex-start;
+    background:rgba(139,124,246,.12);
+    border-color:rgba(139,124,246,.22);
+    color:rgba(255,255,255,.92);
+  }
+  .jarvis-msg.assistant.thinking{
+    color:rgba(255,255,255,.45);
+    font-style:italic;
+  }
+  .jarvis-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+  }
+  .jarvis-chip{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:rgba(255,255,255,.65);
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:999px;
+    padding:7px 12px;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .jarvis-chip:hover{
+    border-color:#8b7cf6;
+    color:#b7aefc;
+    background:rgba(139,124,246,.1);
+  }
+  .jarvis-chips.hidden{ display:none; }
+  .jarvis-input-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:10px;
+    background:rgba(255,255,255,.03);
+    padding:4px 4px 4px 12px;
+  }
+  .jarvis-input{
+    flex:1;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:#fff;
+    font-size:13.5px;
+    padding:9px 0;
+    font-family:inherit;
+  }
+  .jarvis-input::placeholder{ color:rgba(255,255,255,.35); }
+  .jarvis-send{
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    border:none;
+    background:#8b7cf6;
+    color:#fff;
+    font-size:15px;
+    cursor:pointer;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background .15s ease;
+  }
+  .jarvis-send:hover{ background:#7a6af0; }
+  .jarvis-send:disabled{ opacity:.5; cursor:default; }
+</style>
 </head>
 <body>
 
@@ -411,20 +532,34 @@
         <div class="jarvis-ring"><div class="jarvis-ring-core"></div></div>
         <div>
           <div class="jarvis-name">Jarvis</div>
-          <div class="jarvis-status"><span class="jarvis-status-dot"></span> live — Streamlit assistant</div>
+          <div class="jarvis-status"><span class="jarvis-status-dot"></span> live — resume assistant</div>
         </div>
       </div>
       <button class="jarvis-close" id="jarvisClose" aria-label="Close">✕</button>
     </div>
     <p class="jarvis-note">Ask Jarvis about Shiv's experience, skills, and projects.</p>
-    <div class="jarvis-embed-wrap">
-      <iframe
-        class="jarvis-embed"
-        data-remote-src="https://jarvis-resume-chatbot.streamlit.app/?embed=true"
-        data-local-src="http://127.0.0.1:8501/?embed=true"
-        title="Jarvis resume assistant"
-        allow="clipboard-write"
-      ></iframe>
+
+    <div class="jarvis-chat" id="jarvisChat">
+      <div class="jarvis-messages" id="jarvisMessages"></div>
+
+      <div class="jarvis-chips" id="jarvisChips">
+        <button class="jarvis-chip" data-q="What do you actually work on?">What do you actually work on?</button>
+        <button class="jarvis-chip" data-q="What's your tech stack?">What's your tech stack?</button>
+        <button class="jarvis-chip" data-q="Tell me about SmartChat.">Tell me about SmartChat.</button>
+        <button class="jarvis-chip" data-q="What's a project you're proud of?">What's a project you're proud of?</button>
+        <button class="jarvis-chip" data-q="How can I reach you?">How can I reach you?</button>
+      </div>
+
+      <form class="jarvis-input-row" id="jarvisForm">
+        <input
+          type="text"
+          class="jarvis-input"
+          id="jarvisInput"
+          placeholder="Ask about Shiv's work…"
+          autocomplete="off"
+        />
+        <button type="submit" class="jarvis-send" id="jarvisSend" aria-label="Send">↑</button>
+      </form>
     </div>
   </div>
 
