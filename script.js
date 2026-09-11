@@ -543,19 +543,25 @@
   const jarvisTooltip = document.getElementById('jarvisTooltip');
   const jarvisPanel = document.getElementById('jarvisPanel');
   const jarvisEmbed = document.querySelector('.jarvis-embed');
+  let jarvisLoaded = false;
 
-  // Use the local Streamlit app while developing the portfolio locally.
-  if (jarvisEmbed) {
+  // Load the Streamlit app the first time the widget is actually opened,
+  // rather than on page load — this avoids the iframe failing to load
+  // while the panel is still hidden (display:none / not open).
+  function loadJarvisEmbed(){
+    if (!jarvisEmbed || jarvisLoaded) return;
     const isLocalPortfolio = window.location.protocol === 'file:'
       || ['localhost', '127.0.0.1'].includes(window.location.hostname);
     jarvisEmbed.src = isLocalPortfolio
       ? jarvisEmbed.dataset.localSrc
       : jarvisEmbed.dataset.remoteSrc;
+    jarvisLoaded = true;
   }
 
   function openJarvis(){
     jarvisWidget.classList.add('open');
     jarvisTooltip.classList.remove('show');
+    loadJarvisEmbed();
   }
   function closeJarvis(){ jarvisWidget.classList.remove('open'); }
   function toggleJarvis(){ jarvisWidget.classList.contains('open') ? closeJarvis() : openJarvis(); }
