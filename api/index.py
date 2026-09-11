@@ -11,8 +11,11 @@ from __future__ import annotations
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from resume_chatbot import answer_question
+
 
 app = FastAPI()
 
